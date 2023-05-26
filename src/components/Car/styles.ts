@@ -39,7 +39,7 @@ export const Name = styled.Text`
 export const About = styled.View`
   flex-direction: row;
   align-items: center;
-  margin-bottom: 24px;
+  margin-top: 16px;
 `;
 
 export const Rent = styled.View`
