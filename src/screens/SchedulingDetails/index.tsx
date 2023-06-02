@@ -16,9 +16,16 @@ import { Button } from '../../components/Button';
 import { useTheme } from 'styled-components';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { StatusBar } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 export function SchedulingDetails(){
   const theme = useTheme();
+
+  const navigation = useNavigation();
+
+  function handleConfirmRental(){
+    navigation.navigate('SchedulingComplete');
+  }
 
   return (
     <Container>
@@ -80,7 +87,7 @@ export function SchedulingDetails(){
           />
 
           <DateInfo>
-            <DateTitle>DE</DateTitle>
+            <DateTitle>ATÉ</DateTitle>
             <DateValue>01/06/2023</DateValue>
           </DateInfo>
         </RentalPeriod>
@@ -96,7 +103,11 @@ export function SchedulingDetails(){
       </Content>
 
       <Footer>
-        <Button title='Confirmar' />
+        <Button
+          title='Alugar agora'
+          onPress={handleConfirmRental}
+          color={theme.colors.success}
+        />
       </Footer>
 
     </Container>
