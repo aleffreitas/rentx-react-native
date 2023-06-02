@@ -15,6 +15,7 @@ import PeopleSvg from '../../assets/people.svg';
 import { Button } from '../../components/Button';
 import { useTheme } from 'styled-components';
 import { RFValue } from 'react-native-responsive-fontsize';
+import { StatusBar } from 'react-native';
 
 export function SchedulingDetails(){
   const theme = useTheme();
@@ -22,6 +23,11 @@ export function SchedulingDetails(){
   return (
     <Container>
       <Header>
+        <StatusBar
+          barStyle='dark-content'
+          translucent
+          backgroundColor='transparent'
+        />
         <BackButton onPress={() => {}}/>
       </Header>
 
