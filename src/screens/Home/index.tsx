@@ -15,18 +15,8 @@ export function Home(){
   const [loading, setLoading] = useState(true);
   const navigation = useNavigation();
 
-  const carData = {
-    brand: 'audi',
-    name: 'RS 5 Coupé',
-    rent: {
-      period: 'Ao dia',
-      price: 120
-    },
-    thumbnail: 'https://cdn.wheel-size.com/automobile/body/audi-rs5-2020-2022-1613028935.6138937.png'
-  }
-
-  function handleCarDetails(){
-    navigation.navigate('CarDetails');
+  function handleCarDetails(car: CarDTO){
+    navigation.navigate('CarDetails', {car});
   }
 
   async function fetchCars(){
@@ -70,7 +60,7 @@ export function Home(){
           renderItem={({ item }) =>
             <Car
               data={item}
-              onPress={handleCarDetails}
+              onPress={() => handleCarDetails(item)}
             />
           }      
         />
