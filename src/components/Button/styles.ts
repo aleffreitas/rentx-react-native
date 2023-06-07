@@ -4,11 +4,14 @@ import styled, { css } from 'styled-components/native';
 
 interface ContainerProps extends RectButtonProps{
   color?: string;
+  enabled: boolean;
+  loading?: boolean;
 }
 
 export const Container = styled(RectButton)<ContainerProps>`
-  ${({ theme, color }) => css`
+  ${({ theme, color, enabled, loading }) => css`
     background-color: ${color ? color : theme.colors.main};
+    opacity: ${(enabled === false || loading === true) ? .5 : 1};
   `}
   width: 100%;
   padding: 19px;
