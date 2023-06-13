@@ -20,9 +20,10 @@ interface Params {
 }
 
 export function CarDetails(){
+  const theme = useTheme();
+
   const navigation = useNavigation();
   const route = useRoute();
-  const theme = useTheme();
   const { car } = route.params as Params;
 
   const scrollY = useSharedValue(0);
@@ -79,13 +80,13 @@ export function CarDetails(){
           <BackButton onPress={handleBack}/>
         </Header>
 
-        <Animated.View style={sliderCarsStyleAnimation}>
-          <CarImages>
-            <ImageSlider
-              imagesUrl={car.photos}
-            />
-          </CarImages>
-        </Animated.View>
+        <CarImages>
+          <Animated.View style={sliderCarsStyleAnimation}>
+              <ImageSlider
+                imagesUrl={car.photos}
+              />
+          </Animated.View>
+        </CarImages>
       </Animated.View>
 
       <Animated.ScrollView
