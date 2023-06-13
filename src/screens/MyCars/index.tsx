@@ -11,7 +11,7 @@ import { Car } from '../../components/Car';
 
 
 import { Appointments, AppointmentsQuantity, AppointmentsTitle, CarFooter, CarFooterDate, CarFooterPeriod, CarFooterTitle, CarWrapper, Container, Content, Header, SubTitle, Title } from './styles';
-import { Load } from '../../components/Load/indes';
+import { LoadAnimation } from '../../components/LoadAnimation';
 
 interface CarProps {
   id: string;
@@ -70,7 +70,7 @@ export function MyCars(){
         <SubTitle>Conforto, segurança e praticidade</SubTitle>
       </Header>
 
-      {loading ? <Load /> :
+      {loading ? <LoadAnimation /> :
         <Content>
           <Appointments>
             <AppointmentsTitle>Agendamentos feitos</AppointmentsTitle>

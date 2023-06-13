@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Ionicons } from '@expo/vector-icons';
-import { StatusBar } from 'react-native';
+import { BackHandler, StatusBar } from 'react-native';
 import { CarList, Container, Header, HeaderContent, TotalCars} from './styles';
 
 import Logo from '../../assets/logo.svg';
@@ -9,11 +9,11 @@ import { Car } from '../../components/Car';
 import { useNavigation } from '@react-navigation/native';
 import { api } from '../../services/api';
 import { CarDTO } from '../../dtos/CarDTO';
-import { Loading } from '../../components/Load/styles';
 import { GestureHandlerRootView, PanGestureHandler, RectButton } from 'react-native-gesture-handler';
 import { useTheme } from 'styled-components';
 import Animated, { useAnimatedGestureHandler, useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
 import { StyleSheet } from 'react-native';
+import { LoadAnimation } from '../../components/LoadAnimation';
 
 const ButtonAnimated = Animated.createAnimatedComponent(RectButton);
 
@@ -75,6 +75,12 @@ export function Home(){
     fetchCars();
   },[]);
 
+  useEffect(() => {
+    BackHandler.addEventListener('hardwareBackPress', () => {
+      return true;
+    })
+  },[]);
+
   return(
     <Container>
       <StatusBar
@@ -89,11 +95,13 @@ export function Home(){
             width={RFValue(108)}
             height={RFValue(12)}
           />
-          <TotalCars>Total de {cars.length} carros</TotalCars>
+          {!loading && 
+            <TotalCars>Total de {cars.length} carros</TotalCars>
+          }
         </HeaderContent>
       </Header>
 
-      {loading? <Loading /> : 
+      {loading? <LoadAnimation /> : 
         <CarList
           data={cars}
           keyExtractor={item => item.id}
