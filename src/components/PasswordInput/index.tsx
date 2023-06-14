@@ -12,7 +12,7 @@ interface InputProps extends TextInputProps {
 }
 
 export function PasswordInput({ iconName, value, ...rest }: InputProps){
-  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const [isPasswordVisible, setIsPasswordVisible] = useState(true);
   const [isFocused, setIsFocused] = useState(false);
   const [isFilled, setIsFilled] = useState(false);
 

@@ -1,17 +1,37 @@
 import React, { useState } from 'react';
+import * as Yup from 'yup';
 
 import { Container, Footer, Form, Header, SubTitle, Title } from './styles';
-import { Keyboard, KeyboardAvoidingView, StatusBar, TouchableWithoutFeedback } from 'react-native';
+import { Alert, Keyboard, KeyboardAvoidingView, StatusBar, TouchableWithoutFeedback } from 'react-native';
 import { Button } from '../../components/Button';
 import { useTheme } from 'styled-components';
 import { Input } from '../../components/Input';
 import { PasswordInput } from '../../components/PasswordInput';
+import { schema } from './validations';
 
 export function SignIn(){
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const theme = useTheme();
+
+  async function handleSignIn(){
+    try {
+      await schema.validate({ email, password });
+
+      Alert.alert('Tudo certo')
+      
+    } catch (error) {
+      if(error instanceof Yup.ValidationError){
+        return Alert.alert('Opa', error.message);
+      } else {
+        return Alert.alert(
+          'Erro na autenticação',
+          'Ocorreu um erro ao fazer login, verifique as credenciais'
+        );
+      }
+    }
+  }
 
   return (
     <KeyboardAvoidingView behavior='position' enabled>
@@ -55,9 +75,9 @@ export function SignIn(){
           <Footer>
             <Button
               title='Login'
-              enabled={false}
+              enabled={true}
               loading={false}
-              onPress={() => {}}
+              onPress={handleSignIn}
             />
 
             <Button
