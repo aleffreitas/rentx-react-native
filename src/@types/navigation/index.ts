@@ -3,18 +3,30 @@ import { CarDTO } from "../../dtos/CarDTO"
 
 export type RootStackParamList = {
   Home: undefined,
+  SignUpFirstStep: undefined,
+  SignUpSecondStep: {
+    user: {
+      name: string;
+      email: string;
+      driverLicense: string;
+    }
+  },
   CarDetails: {
-    car: CarDTO
+    car: CarDTO;
   },
   Scheduling: {
     car: CarDTO
   },
   SchedulingDetails: {
-    car: CarDTO,
+    car: CarDTO;
     dates: string[]
   },
-  SchedulingComplete: undefined,
-  MyCars: undefined,
+  Confirmation: {
+    title: string;
+    message: string;
+    nextScreenRoute: string;
+  },
+  MyCars: undefined;
 }
 
 declare global {

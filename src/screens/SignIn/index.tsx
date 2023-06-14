@@ -8,12 +8,14 @@ import { useTheme } from 'styled-components';
 import { Input } from '../../components/Input';
 import { PasswordInput } from '../../components/PasswordInput';
 import { schema } from './validations';
+import { useNavigation } from '@react-navigation/native';
 
 export function SignIn(){
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const theme = useTheme();
+  const navigation = useNavigation();
 
   async function handleSignIn(){
     try {
@@ -31,6 +33,10 @@ export function SignIn(){
         );
       }
     }
+  }
+
+  function handleNewAccount(){
+    navigation.navigate('SignUpFirstStep');
   }
 
   return (
@@ -86,7 +92,7 @@ export function SignIn(){
               light
               enabled
               loading={false}
-              onPress={() => {}}
+              onPress={handleNewAccount}
             />
           </Footer>
         </Container>
