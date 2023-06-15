@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Alert, Keyboard, KeyboardAvoidingView, TouchableWithoutFeedback } from 'react-native';
 import * as Yup from 'yup';
 import { useNavigation } from '@react-navigation/native';
 
@@ -7,7 +8,6 @@ import { Container, Form, FormTitle, Header, Steps, SubTitle, Title } from './st
 import { Bullet } from '../../../components/Bullet';
 import { Input } from '../../../components/Input';
 import { Button } from '../../../components/Button';
-import { Alert, Keyboard, KeyboardAvoidingView, TouchableWithoutFeedback } from 'react-native';
 import { schema } from './validations';
 
 export function SignUpFirstStep(){
