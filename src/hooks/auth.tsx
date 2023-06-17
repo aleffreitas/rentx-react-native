@@ -2,6 +2,7 @@ import React, { ReactNode, createContext, useContext, useEffect, useState } from
 import { api } from "../services/api";
 import { database } from "../database";
 import { User as ModelUser } from '../database/model/User';
+import { Alert } from "react-native";
 
 interface User {
   id: string;
@@ -20,6 +21,8 @@ interface SignInCredentials {
 interface AuthContextData {
   user: User;
   signIn: (credentials: SignInCredentials) => Promise<void>;
+  signedOut: () => Promise<void>;
+  updateUser: (user: User) => Promise<void>;
 }
 
 interface AuthProviderProps {
@@ -38,12 +41,12 @@ function AuthProvider({ children }: AuthProviderProps){
         password
       });
   
-      const { token, user} = response.data;
+      const { token, user } = response.data;
   
       api.defaults.headers.authorization = `Bearer ${token}`;
 
       const userCollection = database.get<ModelUser>('users');
-      await database.action(async () => {
+      await database.write(async () => {
         await userCollection.create(( newUser ) => {
           newUser.user_id = user.id,
           newUser.name = user.name,
@@ -55,6 +58,39 @@ function AuthProvider({ children }: AuthProviderProps){
       });
       
       setData({ ...user, token });
+    } catch (error) {
+      throw new Error(JSON.stringify(error));
+    } 
+  }
+
+  async function signedOut(){
+    try {
+      const userCollection = database.get<ModelUser>('users');
+      await database.write(async () => {
+        const userSelected = await userCollection.find(data.id);
+        await userSelected.destroyPermanently();
+      });
+      
+      setData({} as User);
+
+    } catch (error) {
+      throw new Error(JSON.stringify(error));
+    }
+  }
+
+  async function updateUser(user: User){
+    try {
+      const userCollection = database.get<ModelUser>('users');
+      await database.write(async () => {
+        const userSelected = await userCollection.find(user.id);
+        await userSelected.update(( userData ) => {
+          userData.name = user.name,
+          userData.driver_license = user.driver_license,
+          userData.avatar = user.avatar
+        });
+      });
+
+      setData(user);
 
     } catch (error) {
       throw new Error(JSON.stringify(error));
@@ -80,7 +116,9 @@ function AuthProvider({ children }: AuthProviderProps){
     <AuthContext.Provider
       value={{
         user: data,
-        signIn
+        signIn,
+        signedOut,
+        updateUser
       }}
     >
       {children}
