@@ -8,7 +8,7 @@ import { BorderlessButton } from 'react-native-gesture-handler';
 
 interface InputProps extends TextInputProps {
   iconName: React.ComponentProps<typeof Feather>['name'];
-  value: string;
+  value?: string;
 }
 
 export function PasswordInput({ iconName, value, ...rest }: InputProps){
@@ -46,6 +46,7 @@ export function PasswordInput({ iconName, value, ...rest }: InputProps){
         onBlur={handleInputBlur}
         secureTextEntry={isPasswordVisible}
         isFocused={isFocused}
+        autoCorrect={false}
         {...rest}
       />
       
