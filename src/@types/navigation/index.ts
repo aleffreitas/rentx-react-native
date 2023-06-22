@@ -1,5 +1,6 @@
 import { MarkedDateProps } from "../../components/Calendar"
 import { CarDTO } from "../../dtos/CarDTO"
+import { Car as ModelCar } from '../../database/model/Car'
 
 export type RootStackParamList = {
   Home: undefined,
@@ -16,7 +17,7 @@ export type RootStackParamList = {
     car: CarDTO;
   },
   Scheduling: {
-    car: CarDTO
+    car: ModelCar;
   },
   SchedulingDetails: {
     car: CarDTO;
